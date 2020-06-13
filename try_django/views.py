@@ -1,8 +1,9 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 # Model View Template (MVT)
 def home_page(request):
-    return HttpResponse("<h1>Hello World</h1>")
+    return HttpResponse(request, "hello_world.html")
 
 
 def about_page(request):
