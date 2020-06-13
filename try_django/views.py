@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Model View Template (MVT)
 def home_page(request):
-    return HttpResponse(request, "hello_world.html")
+    return render(request, "hello_world.html")
 
 
 def about_page(request):
