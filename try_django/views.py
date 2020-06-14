@@ -6,7 +6,9 @@ from django.template.loader import get_template
 # Dont Repeat Yourself = DRY
 def home_page(request):
     my_title = "Hello there ..."
-    context = {"title": my_title}
+    context = {"title": "my_title"}
+    if request.user.is_authenticated:
+        context = {"title": my_title, "my_list": [1, 2, 3, 4, 5]}
     # template_name = "title.txt"
     # template_obj = get_template(template_name)
     # rendered_string = template_obj.render(context)
