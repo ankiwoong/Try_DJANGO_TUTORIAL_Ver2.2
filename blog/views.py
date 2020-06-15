@@ -34,8 +34,10 @@ def blog_post_detail_page(request, slug):
 def blog_post_list_view(request):
     # list out objects
     # could be search
+    qs = BlogPost.objects.all()  # queryset > list of python object
+    # qs = BlogPost.objects.filter(title__icontains="hello")
     template_name = "blot_post_list.html"
-    context = {"object_list": []}
+    context = {"object_list": qs}
     return render(request, template_name, context)
 
 
