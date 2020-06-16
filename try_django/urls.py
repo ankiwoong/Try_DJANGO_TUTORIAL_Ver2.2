@@ -1,7 +1,6 @@
 """try_django URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,25 +14,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include  # url
-
 from blog.views import blog_post_create_view
-from .views import (
-    home_page,
-    about_page,
-    contact_page,
-    example_page,
-)
+from .views import home_page, about_page, contact_page, example_page
+
 
 urlpatterns = [
     path("", home_page),
     path("blog-new/", blog_post_create_view),
     path("blog/", include("blog.urls")),
-    # re_path(r"^blog/(?P<slug>\w+)/$", blog_post_detail_page),
-    path("page", about_page),
-    path("pages", about_page),
+    # re_path(r'^blog/(?P<slug>\w+)/$', blog_post_detail_view),
+    path("page/", about_page),
+    path("pages/", about_page),
     re_path(r"^pages?/$", about_page),
     re_path(r"^about/$", about_page),
-    path("contact/", contact_page),
     path("example/", example_page),
+    path("contact/", contact_page),
     path("admin/", admin.site.urls),
 ]
