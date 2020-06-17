@@ -26,14 +26,18 @@ def blog_post_list_view(request):
 
 
 # @login_required(login_url="/login")
-@login_required
+# @login_required
 @staff_member_required
 def blog_post_create_view(request):
     # create objects
     # ? use a form
+    # request.user > return something
+    # if not request.user.is_authenticated:
+    #     return render(request, "note-a-user.html", {})
     form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = request.user
         # obj.title = form.cleaned_data.get("title") + "0"
         obj.save()
         form = BlogPostModelForm()
