@@ -4,8 +4,8 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from .models import BlogPost
 from .forms import BlogPostModelForm
+from .models import BlogPost
 
 # CRUD
 
@@ -19,26 +19,23 @@ from .forms import BlogPostModelForm
 def blog_post_list_view(request):
     # list out objects
     # could be search
+    # qs = BlogPost.objects.all().published() # queryset -> list of python object
     qs = BlogPost.objects.all()  # queryset -> list of python object
     template_name = "blog/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)
 
 
-# @login_required(login_url="/login")
 # @login_required
 @staff_member_required
 def blog_post_create_view(request):
     # create objects
     # ? use a form
-    # request.user > return something
-    # if not request.user.is_authenticated:
-    #     return render(request, "note-a-user.html", {})
+    # request.user -> return something
     form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        # obj.title = form.cleaned_data.get("title") + "0"
         obj.save()
         form = BlogPostModelForm()
     template_name = "form.html"
@@ -61,7 +58,7 @@ def blog_post_update_view(request, slug):
     if form.is_valid():
         form.save()
     template_name = "form.html"
-    context = {"form": form, "title": f"Update { obj.title }"}
+    context = {"title": f"Update {obj.title}", "form": form}
     return render(request, template_name, context)
 
 
@@ -69,10 +66,9 @@ def blog_post_update_view(request, slug):
 def blog_post_delete_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     template_name = "blog/delete.html"
-
     if request.method == "POST":
         obj.delete()
         return redirect("/blog")
-
     context = {"object": obj}
     return render(request, template_name, context)
+
