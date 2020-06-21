@@ -11,6 +11,6 @@ class ContactForm(forms.Form):
         print(email)
         if email.endswith(".edu"):
             raise forms.ValidationError(
-                "This is not a valid email. Please don't use. edu."
+                "This is not a valid email. Please don't use .edu."
             )
         return email

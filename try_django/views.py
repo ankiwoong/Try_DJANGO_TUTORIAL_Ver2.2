@@ -2,38 +2,29 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
 
+# Dont Repeat Yourself = DRY
+
 from .forms import ContactForm
 from blog.models import BlogPost
 
-# Model View Template (MVT)
-# Dont Repeat Yourself = DRY
+
 def home_page(request):
-    my_title = "Hello there ..."
+    my_title = "Hello there...."
     qs = BlogPost.objects.all()[:5]
-    context = {"title": "Welcome to Try Dajngo", "blog_list": qs}
-    # if request.user.is_authenticated:
-    # context = {"title": my_title, "my_list": [1, 2, 3, 4, 5]}
-    # template_name = "title.txt"
-    # template_obj = get_template(template_name)
-    # rendered_string = template_obj.render(context)
-    # print(rendered_string)
-    # doc = "<h1>{title}</h1>".format(title=my_title)
-    # django_render_doc = "<h1>{{ title }}</h1>".format(title=my_title)
-    # return render(request, "hello_world.html", {"title": rendered_string})
+    context = {"title": "Welcome to Try Django", "blog_list": qs}
     return render(request, "home.html", context)
 
 
 def about_page(request):
-    return render(request, "about.html", {"title": "About Us"})
+    return render(request, "about.html", {"title": "About"})
 
 
 def contact_page(request):
-    # print(request.POST)
     form = ContactForm(request.POST or None)
     if form.is_valid():
         print(form.cleaned_data)
         form = ContactForm()
-    context = {"title": "Contact Us", "form": form}
+    context = {"title": "Contact us", "form": form}
     return render(request, "form.html", context)
 
 
@@ -43,3 +34,4 @@ def example_page(request):
     template_obj = get_template(template_name)
     rendered_item = template_obj.render(context)
     return HttpResponse(rendered_item)
+
