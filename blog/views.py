@@ -23,7 +23,6 @@ def blog_post_list_view(request):
     if request.user.is_authenticated:
         my_qs = BlogPost.objects.filter(user=request.user)
         qs = (qs | my_qs).distinct()
-    # qs = BlogPost.objects.all()  # queryset -> list of python object
     template_name = "blog/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)
@@ -74,4 +73,3 @@ def blog_post_delete_view(request, slug):
         return redirect("/blog")
     context = {"object": obj}
     return render(request, template_name, context)
-
